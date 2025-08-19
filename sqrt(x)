@@ -1,0 +1,19 @@
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if x < 2:
+            return x
+
+        left = 0
+        right = x
+        ans = 0 # To store the potential answer
+
+        while left <= right:
+            mid = left + (right - left) // 2
+            
+            # Check for potential overflow if x is very large
+            if mid > x // mid: # mid * mid > x
+                right = mid - 1
+            else: # mid * mid <= x
+                ans = mid
+                left = mid + 1
+        return ans
