@@ -1,0 +1,13 @@
+class Solution:
+    def zeroFilledSubarray(self, nums: List[int]) -> int:
+        total_zero_subarrays = 0
+        current_consecutive_zeros = 0
+
+        for num in nums:
+            if num == 0:
+                current_consecutive_zeros += 1
+                total_zero_subarrays += current_consecutive_zeros
+            else:
+                current_consecutive_zeros = 0
+        
+        return total_zero_subarrays
