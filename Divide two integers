@@ -1,0 +1,35 @@
+class Solution:
+    def divide(self, dividend: int, divisor: int) -> int:
+        # 32-bit signed integer limits
+        INT_MAX = 2**31 - 1
+        INT_MIN = -2**31
+        
+        # Handle overflow case explicitly: dividing INT_MIN by -1 would exceed INT_MAX
+        if dividend == INT_MIN and divisor == -1:
+            return INT_MAX  # :contentReference[oaicite:0]{index=0}
+
+        # Determine the sign of the result
+        negative = (dividend < 0) ^ (divisor < 0)
+
+        # Work with absolute values to simplify computation
+        dvd = abs(dividend)
+        dvs = abs(divisor)
+
+        quotient = 0
+        
+        # Subtract divisor using bit-shifted multiples to speed up
+        while dvd >= dvs:
+            temp = dvs
+            multiple = 1
+            # Double temp via left shift until it would exceed dvd
+            while dvd >= (temp << 1):
+                temp <<= 1
+                multiple <<= 1
+            dvd -= temp
+            quotient += multiple
+
+        # Apply sign
+        result = -quotient if negative else quotient
+
+        # Clamp to 32-bit signed integer range
+        return min(INT_MAX, max(INT_MIN, result))
