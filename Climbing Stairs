@@ -1,0 +1,8 @@
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 1:
+            return 1
+        prev2, prev = 1, 2  # prev2: ways for step 1; prev: ways for step 2
+        for _ in range(3, n + 1):
+            prev2, prev = prev, prev + prev2
+        return prev
