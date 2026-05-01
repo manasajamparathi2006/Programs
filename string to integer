@@ -1,0 +1,35 @@
+class Solution:
+    def myAtoi(self, s: str) -> int:
+        b=len(s)
+        p=""
+        j=0
+        u=1
+        for i in range(0,b,1):
+            if s[i]==" ":
+                continue
+            elif s[i]=="-":
+                u=u*(-1)
+                j=i+1
+                break
+            elif s[i]=="+":
+                j=i+1
+                break
+            elif s[i].isdigit():
+                j=i
+                break
+            else:
+                return 0
+        for k in range(j,b,1):
+            if s[k].isdigit():
+                p+=s[k]
+            else:
+                break
+        if p=="":
+            return 0
+        num=int(p)*u
+        if num < -2**31:
+            return -2**31
+        if num > 2**31 - 1:
+            return 2**31 - 1
+
+        return num
