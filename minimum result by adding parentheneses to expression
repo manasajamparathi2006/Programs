@@ -1,0 +1,28 @@
+class Solution:
+    def minimizeResult(self, expression: str) -> str:
+        # right, expression length is small, it means that we will probably have to backtrack
+
+        n1, n2 = expression.split('+')
+
+        _min = float('inf')
+        best = ""
+
+        for i in range(len(n1)):
+            # right, so we split the left side
+            aStr, bStr = n1[:i], n1[i:]
+
+            for j in range(1, len(n2) + 1):
+                cStr, dStr = n2[:j], n2[j:]
+
+                a = int(aStr) if aStr else 1
+                b = int(bStr)
+                c = int(cStr)
+                d = int(dStr) if dStr else 1
+
+                val = a * (b + c) * d
+                if val < _min:
+                    _min = val
+                    best = aStr + "(" + bStr + '+' + cStr + ")" + dStr
+
+    
+        return best
