@@ -1,0 +1,32 @@
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        R = len(matrix)
+        C = len(matrix[0])
+        
+        #transpose
+        for i in range(R):
+            for j in range(C):
+                if i < j:
+                    matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        #revsere row
+        for r in range(R):
+            matrix[r].reverse()
+        
+         
+
+        ''' 
+
+        so what transpose does?  
+
+        [ a11 a12 a13
+         a21 a22 a23
+         a31 a32 a33 ]
+
+        [ a11 a21 a23
+          a12 a22 a32
+          a13 a23 a33 ]
+
+        '''   
