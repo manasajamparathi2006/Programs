@@ -1,0 +1,55 @@
+class Solution:
+    def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
+
+        n = len(words)
+        prev_width = len(words[0])
+        start = 0
+        ans = []
+        for i in range(1, n):
+            word = words[i]
+            temp_width = prev_width + len(word) + (i-start)
+            if temp_width>maxWidth:
+                # single word case
+                if i-start == 1:
+                    sentence = words[start] + (maxWidth - len(words[start]))*" "
+                else:
+                    # find spacing
+                    space = maxWidth - prev_width
+                    space_count = i-start-1
+                    avg_space = space//space_count
+                    rem_space = space%space_count
+                    # create sentence
+                    sentence = ""
+                    for j in range(start, i):
+                        sentence += words[j]
+                        if j!=i-1:
+                            sentence += (avg_space)*" "
+                            if rem_space:
+                                sentence += " "
+                                rem_space -= 1
+                ans.append(sentence)
+
+                # reassign variable
+                prev_width = len(word)
+                start = i
+            else:
+                prev_width += len(word)
+        
+        if prev_width:
+            sentence = ""
+            for j in range(start, n):
+                sentence += words[j]
+                if j != n-1:
+                    sentence += " "
+            sentence += (maxWidth - len(sentence))*" "
+            ans.append(sentence)
+        return ans
+
+
+
+
+
+
+
+
+        
