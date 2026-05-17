@@ -1,0 +1,27 @@
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+        # 1. Divide the abs. path to different pieces to consider:
+        pieces = path.split('/')
+
+        # 2. Utilize the stack (LIFO) to manipulate the considered pieces:
+        stack = []
+
+        for p in pieces:
+            # a. If piece is the current dir or the empty string -> ignore:
+            if p == "" or p == ".":
+                continue
+            # b. If piece is the parent directory -> popping from the stack:
+            elif p == "..":
+                if stack:
+                    stack.pop()
+            # c. If piece is the dir_name -> append it to the stack:
+            else:
+                stack.append(p)
+        
+        # 3. return the simplified canonical path:
+        if stack:
+            # a. If stack is not empty -> return Root + simplified canonical path
+            return "/" + "/".join(stack)
+        else:
+            # b. If empty stack -> just only the root path: 
+            return "/"
