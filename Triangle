@@ -1,0 +1,16 @@
+class Solution:
+    def minimumTotal(self, nums: List[List[int]]) -> int:
+        m,n=len(nums),len(nums[0])
+        dp = []
+        for row in nums:
+            dp.append([None] * len(row))
+        def f(row,col):
+            if row==m-1:
+                return nums[row][col]
+            if dp[row][col] is not None:
+                return dp[row][col]
+            same=nums[row][col]+f(row+1,col)
+            right=nums[row][col]+f(row+1,col+1)
+            dp[row][col]=min(same,right)
+            return dp[row][col]
+        return f(0,0)
