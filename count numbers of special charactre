@@ -1,0 +1,12 @@
+class Solution:
+    def numberOfSpecialChars(self, word: str) -> int:
+        lower: list[int] = [-1] * 26
+        upper: list[int] = [-1] * 26
+        for i in range(len(word)):
+            if word[i].islower(): lower[ord(word[i]) - 97] = i
+            elif upper[ord(word[i]) - 65] == -1: upper[ord(word[i]) - 65] = i
+        output: int = 0
+        for i in range(26):
+            if lower[i] != -1 and upper[i] != -1 and lower[i] < upper[i]:
+                output += 1
+        return output
