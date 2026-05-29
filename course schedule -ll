@@ -1,0 +1,30 @@
+class Solution:
+    def findOrder(self, numCourses: int, prereqs: List[List[int]]) -> List[int]:
+        # populate setup dicts
+        unlocks = defaultdict(set)
+        lockedby = defaultdict(int)     # counts how many prereqs are locking this course
+        for course, prereq in prereqs:
+            unlocks[prereq].add(course)
+            lockedby[course] += 1
+        
+        # find courses we can take immediately to initiate can_take
+        can_take = []
+        taken = []
+        for i in range(numCourses):
+            if not lockedby[i]:
+                can_take.append(i)
+
+        # while can_take, pop c from it:
+        while can_take:
+            c = can_take.pop()
+            taken.append(c)
+
+            # iterate over every course c unlocks. remove c from the corresponding set
+            for x in unlocks[c]:
+                lockedby[x] -= 1
+
+                # if the x can now be taken
+                if not lockedby[x]:
+                    can_take.append(x)
+            
+        return taken if len(taken) == numCourses else []
