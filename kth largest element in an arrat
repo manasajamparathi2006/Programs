@@ -1,0 +1,18 @@
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        
+        # insert elements into a max heap
+        # while maintaining heap invariant; largest element is stored at index 0 of the heap.
+        heap = []
+        for num in nums:
+            heapq.heappush_max(heap, num)
+
+        # remove k-1 elements from the max heap
+        for _ in range(k-1):
+            heapq.heappop_max(heap)
+        
+
+        # remove the last element. (k'th element). 
+        # this element is the k'th largest element in the array
+        kth_largest_element = heapq.heappop_max(heap)
+        return kth_largest_element
